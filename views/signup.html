@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="/index.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="outer">
+      <div class="welcome_side">
+        <h1>Welcome Back</h1>
+        <p>To Keep connected with us please login with your personal info</p>
+        <button
+          id="btn1"
+          type="button"
+          onclick="ChangeRoute()"
+          class="welcome_button"
+        >
+          SIGN IN
+        </button>
+      </div>
+      <div class="login_side">
+        <h1>Create Account</h1>
+        <form class="input_section" id="signupform">
+          <input name="name" id="name" type="text" placeholder="Name" />
+          <input name="email" id="email" type="text" placeholder="Email" />
+          <input
+            name="password"
+            id="password"
+            type="password"
+            placeholder="Password"
+          />
+          <button class="login_button" type="submit">SIGN UP</button>
+        </form>
+      </div>
+    </div>
+    <script>
+      function ChangeRoute() {
+        window.location.href = "/login";
+      }
+      let signupForm = document.getElementById("signupform");
+      signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        let name = e.target[0].value,
+          email = e.target[1].value,
+          password = e.target[2].value;
+        fetch("https://assignmentlets5.onrender.com/api/signup", {
+          method: "POST",
+          body: JSON.stringify({
+            name: name,
+            email: email,
+            phone: "9929",
+            password: password,
+          }),
+          headers: {
+            "Content-type": "application/json; charset=UTF-8",
+            "Access-Control-Allow-Origin": "*",
+          },
+        })
+          .then((res) => res.json())
+          .then((json) => {
+            window.alert(json.message);
+            signupForm.reset();
+          });
+      });
+    </script>
+  </body>
+</html>
